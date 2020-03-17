@@ -1,0 +1,98 @@
+While Loops
+The for loops we’ve used so far are sometimes called "definite" loops, because we know before we start exactly how many times they’re going to repeat. In other situations, we are instead waiting for something to happen _while_ we are looping that will tell us to stop: the user entering a specific command, a timer running out, getting enough questions correct, etc. For these situations, Java provides a while loop. The while loop includes only the test; you have to provide the initialization before the while, and be sure to include the update yourself in the body of the statement.
+
+variable initialization;
+while (test) {
+    body
+    variable update
+}
+diagram of while loop execution
+The following loop prints the sum of all the numbers the user enters as long as it isn’t a zero (assume input has already been declared as a Scanner object):
+
+int sum = 0;
+int number = 1;
+while (number != 0) {
+    System.out.println("Enter a number or 0 to get the sum: ");
+    number = input.nextInt();
+    sum += number;
+}
+System.out.println("The sum is " + sum);
+The initialization not only sets the value of the running sum to zero, it also has to initialize the value of the variable number to a value that will “force” the loop to execute at least once. The update is the scanner input that changes the value of the number used in the test. Here’s an example while loop that doesn’t let the user out until they enter "yes" or "no".
+
+String answer = "";
+while (!answer.equals("yes") && !answer.equals("no")) {
+    System.out.println("Enter yes or no: ");
+    answer = input.getNext();
+}
+System.out.println("Thank you!");
+We’ve used boolean logic for this more complicated condition: we continue the loop as long as the user has _not_ entered "yes" AND has _not_ entered "no". We also had to initialize the loop by setting a value for answer that would force the loop body to execute at least once.
+
+Here’s a variation that lets us use a different message if the user fails to enter the correct phrase the first time. In this case, if they do it right, the loop body doesn’t execute at all. The initialization does, however, duplicate the scanner input statement which MUST be in the body of the loop as well so that the update happens!
+
+System.out.print("Enter yes or no: ");
+String answer = input.getNext();
+while (!answer.equals("yes") && !answer.equals("no")) {
+    System.out.println("Enter ONLY yes or no, please: ");
+    answer = input.getNext();
+}
+System.out.println("Thank you!");
+______________________________________________________________________________________________________
+Nested Loops
+Just as we could nest if statements inside of if statements, we can nest loops inside of loops. Here’s a simple example:
+
+for (int i = 1; i <= 2; i++) {
+   System.out.println("Outer i = " + i);
+   for (int j = 1; j <= 3; j++) {
+      System.out.println("  Inner j = " + j);
+   }
+}
+This code produces the following output:
+
+Outer i = 1
+  Inner j = 1
+  Inner j = 2
+  Inner j = 3
+Outer i = 2
+  Inner j = 1
+  Inner j = 2
+  Inner j = 3
+You can see that the body of the "outer" loop executes 2 times, and for each of those the "inner" loop executes 3 times, a total of 6.
+
+Nested loops like this are often used with two-dimensional tables and matrices with the outer loop handling the rows and the inner loop the columns. This code prints a 5x5 matrix of 0s:
+
+for (int row = 1; row <= 5; row++) {
+   for (int col = 1; col <= 5; col++) {
+      System.out.print("0 ");
+   }
+   System.out.println();
+}
+The output:
+
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+The inner loop prints a single line of the matrix, and the println that is the last statement of the outer loop body to advances to the next row of the matrix.
+
+This may seem more complicated than just printing "0 0 0 0 0" five times in a single loop, but note that it can deal with each value in the matrix separately. So, by adding an if statement inside the inner loop we can print an "identity matrix" with 1’s on the primary diagonal and zeros elsewhere:
+
+for (int row = 1; row <= 5; row++) {
+   for (int col = 1; col <= 5; col++) {
+      if (row == col) {
+         System.out.print("1 ");
+      } else {
+         System.out.print("0 ");
+      }
+    }  
+      System.out.println();
+   }
+
+The output:
+
+1 0 0 0 0
+0 1 0 0 0
+0 0 1 0 0
+0 0 0 1 0
+0 0 0 0 1
+________________________________________________________________________
